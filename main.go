@@ -27,13 +27,19 @@ func main() {
 				j, _ := json.Marshal(t)
 				fmt.Println(string(j))
 			} else {
-				fmt.Printf("Id=%s,Name=%s,StopPlaceType=%s\n",
+				fmt.Printf("Id=%s, Name=%s, StopPlaceType=%s,",
 					t.Id, t.Name, t.StopPlaceType)
+				for _, list := range t.KeyList {
+					for _, kv := range list.KeyValue {
+						fmt.Printf("%s=%s, ", kv.Key, kv.Value)
+					}
+				}
+				fmt.Println()
 			}
 		}
 	}
 	duration := time.Since(start)
 	if !*jsonout {
-		fmt.Printf("StopPlace records: %d, duration: %v\n", i, duration)
+		fmt.Printf("\nStopPlace records: %d, duration: %v\n", i, duration)
 	}
 }
