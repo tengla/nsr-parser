@@ -5,13 +5,14 @@ import (
 	"os"
 )
 
-func StopPlaces(path string) (<-chan StopPlace, <-chan error) {
-	ch := make(chan StopPlace)
-	errCh := make(chan error)
+func StopPlaces(path string) chan interface{} {
+	ch := make(chan interface{})
 	go func() {
 		xmlFile, err := os.Open(path)
 		if err != nil {
-			errCh <- err
+			ch <- err
+			close(ch)
+			return
 		}
 		decoder := xml.NewDecoder(xmlFile)
 		for {
@@ -23,13 +24,15 @@ func StopPlaces(path string) (<-chan StopPlace, <-chan error) {
 			case xml.StartElement:
 				if el.Name.Local == "StopPlace" {
 					var sp StopPlace
-					decoder.DecodeElement(&sp, &el)
-					ch <- sp
+					if err = decoder.DecodeElement(&sp, &el); err != nil {
+						ch <- err
+					} else {
+						ch <- sp
+					}
 				}
 			}
 		}
 		close(ch)
-		close(errCh)
 	}()
-	return ch, errCh
+	return ch
 }
