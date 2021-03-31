@@ -16,9 +16,9 @@ func main() {
 	flag.Parse()
 	start := time.Now()
 	stops := StopPlaces(*xmlfile)
-	i := 0
+	count := 0
 	for stop := range stops {
-		i += 1
+		count += 1
 		switch t := stop.(type) {
 		case error:
 			fmt.Printf("Error: %s\n", t.Error())
@@ -40,6 +40,6 @@ func main() {
 	}
 	duration := time.Since(start)
 	if !*jsonout {
-		fmt.Printf("\nStopPlace records: %d, duration: %v\n", i, duration)
+		fmt.Printf("\nRecord count: %d, duration: %v\n", count, duration)
 	}
 }

@@ -1,5 +1,7 @@
 package main
 
+// NSR document structs
+
 // KeyList
 type KeyList struct {
 	KeyValue []struct {
