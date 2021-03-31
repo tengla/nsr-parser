@@ -28,11 +28,9 @@ func main() {
 				fmt.Println(string(j))
 			} else {
 				fmt.Printf("Id=%s, Name=%s, StopPlaceType=%s,",
-					t.Id, t.Name, t.StopPlaceType)
-				for _, list := range t.KeyList {
-					for _, kv := range list.KeyValue {
-						fmt.Printf("%s=%s, ", kv.Key, kv.Value)
-					}
+					t.ID, t.Name, t.StopPlaceType)
+				for _, kv := range t.KeyList.KeyValue {
+					fmt.Printf("%s=%s, ", kv.Key, kv.Value)
 				}
 				fmt.Println()
 			}
