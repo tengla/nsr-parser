@@ -4,166 +4,142 @@ package main
 
 // StopPlace
 type StopPlace struct {
-	Text         string `xml:",chardata"`
-	Created      string `xml:"created,attr"`
-	Changed      string `xml:"changed,attr"`
-	Modification string `xml:"modification,attr"`
-	Version      string `xml:"version,attr"`
-	ID           string `xml:"id,attr"`
+	Created      string `xml:"created,attr" json:"created,omitempty"`
+	Changed      string `xml:"changed,attr" json:"changed,omitempty"`
+	Modification string `xml:"modification,attr" json:"modification,omitempty"`
+	Version      string `xml:"version,attr" json:"version,omitempty"`
+	ID           string `xml:"id,attr" json:"id,omitempty"`
 	ValidBetween struct {
-		Text     string `xml:",chardata"`
 		FromDate string `xml:"FromDate"` // 2017-06-19T19:12:29.887, ...
 		ToDate   string `xml:"ToDate"`   // 2021-05-02T01:00:09, 2021...
-	} `xml:"ValidBetween"`
+	} `xml:"ValidBetween" json:"validbetween,omitempty"`
 	KeyList struct {
-		Text     string `xml:",chardata"`
 		KeyValue []struct {
-			Text  string `xml:",chardata"`
 			Key   string `xml:"Key"`   // jbvCode, uicCode, iffCode...
 			Value string `xml:"Value"` // GU, 7601213, 7601213, 121...
-		} `xml:"KeyValue"`
-	} `xml:"keyList"`
+		} `xml:"KeyValue" json:"keyvalue,omitempty"`
+	} `xml:"keyList" json:"keylist,omitempty"`
 	Name struct {
-		Text string `xml:",chardata"` // Gudå, Eikenes stasjon, H...
-		Lang string `xml:"lang,attr"`
-	} `xml:"Name"`
+		Text string `xml:",chardata" json:"text,omitempty"` // Gudå, Eikenes stasjon, H...
+		Lang string `xml:"lang,attr" json:"lang,omitempty"`
+	} `xml:"Name" json:"name,omitempty"`
 	Centroid struct {
-		Text     string `xml:",chardata"`
 		Location struct {
-			Text      string `xml:",chardata"`
 			Longitude string `xml:"Longitude"` // 11.620069, 9.895932, 11.1...
 			Latitude  string `xml:"Latitude"`  // 63.444097, 59.146811, 62....
-		} `xml:"Location"`
-	} `xml:"Centroid"`
+		} `xml:"Location" json:"location,omitempty"`
+	} `xml:"Centroid" json:"centroid,omitempty"`
 	AccessibilityAssessment struct {
-		Text                   string `xml:",chardata"`
-		Modification           string `xml:"modification,attr"`
-		Version                string `xml:"version,attr"`
-		ID                     string `xml:"id,attr"`
+		Modification           string `xml:"modification,attr" json:"modification,omitempty"`
+		Version                string `xml:"version,attr" json:"version,omitempty"`
+		ID                     string `xml:"id,attr" json:"id,omitempty"`
 		MobilityImpairedAccess string `xml:"MobilityImpairedAccess"` // partial, partial, partial...
 		Limitations            struct {
-			Text                    string `xml:",chardata"`
 			AccessibilityLimitation struct {
-				Text                    string `xml:",chardata"`
-				Modification            string `xml:"modification,attr"`
-				Version                 string `xml:"version,attr"`
-				ID                      string `xml:"id,attr"`
+				Modification            string `xml:"modification,attr" json:"modification,omitempty"`
+				Version                 string `xml:"version,attr" json:"version,omitempty"`
+				ID                      string `xml:"id,attr" json:"id,omitempty"`
 				WheelchairAccess        string `xml:"WheelchairAccess"`        // true, false, true, true, ...
 				StepFreeAccess          string `xml:"StepFreeAccess"`          // true, false, true, true, ...
 				EscalatorFreeAccess     string `xml:"EscalatorFreeAccess"`     // unknown, unknown, unknown...
 				LiftFreeAccess          string `xml:"LiftFreeAccess"`          // unknown, unknown, unknown...
 				AudibleSignalsAvailable string `xml:"AudibleSignalsAvailable"` // unknown, unknown, unknown...
-			} `xml:"AccessibilityLimitation"`
-		} `xml:"limitations"`
-	} `xml:"AccessibilityAssessment"`
+			} `xml:"AccessibilityLimitation" json:"accessibilitylimitation,omitempty"`
+		} `xml:"limitations" json:"limitations,omitempty"`
+	} `xml:"AccessibilityAssessment" json:"accessibilityassessment,omitempty"`
 	TopographicPlaceRef struct {
-		Text    string `xml:",chardata"`
-		Ref     string `xml:"ref,attr"`
-		Created string `xml:"created,attr"`
-		Version string `xml:"version,attr"`
-	} `xml:"TopographicPlaceRef"`
+		Ref     string `xml:"ref,attr" json:"ref,omitempty"`
+		Created string `xml:"created,attr" json:"created,omitempty"`
+		Version string `xml:"version,attr" json:"version,omitempty"`
+	} `xml:"TopographicPlaceRef" json:"topographicplaceref,omitempty"`
 	TransportMode       string `xml:"TransportMode"` // bus, rail, bus, bus, bus,...
 	BusSubmode          string `xml:"BusSubmode"`    // railReplacementBus, railR...
 	OtherTransportModes string `xml:"OtherTransportModes"`
 	TariffZones         struct {
-		Text          string `xml:",chardata"`
 		TariffZoneRef []struct {
-			Text    string `xml:",chardata"`
-			Ref     string `xml:"ref,attr"`
-			Version string `xml:"version,attr"`
-		} `xml:"TariffZoneRef"`
-	} `xml:"tariffZones"`
+			Ref     string `xml:"ref,attr" json:"ref,omitempty"`
+			Version string `xml:"version,attr" json:"version,omitempty"`
+		} `xml:"TariffZoneRef" json:"tariffzoneref,omitempty"`
+	} `xml:"tariffZones" json:"tariffzones,omitempty"`
 	StopPlaceType string `xml:"StopPlaceType"` // onstreetBus, railStation,...
 	Weighting     string `xml:"Weighting"`     // interchangeAllowed, inter...
 	Quays         struct {
-		Text string `xml:",chardata"`
 		Quay []struct {
-			Text         string `xml:",chardata"`
-			Modification string `xml:"modification,attr"`
-			Version      string `xml:"version,attr"`
-			ID           string `xml:"id,attr"`
-			Changed      string `xml:"changed,attr"`
-			Created      string `xml:"created,attr"`
+			Modification string `xml:"modification,attr" json:"modification,omitempty"`
+			Version      string `xml:"version,attr" json:"version,omitempty"`
+			ID           string `xml:"id,attr" json:"id,omitempty"`
+			Changed      string `xml:"changed,attr" json:"changed,omitempty"`
+			Created      string `xml:"created,attr" json:"created,omitempty"`
 			KeyList      struct {
-				Text     string `xml:",chardata"`
 				KeyValue []struct {
-					Text  string `xml:",chardata"`
 					Key   string `xml:"Key"`   // uicCode, imported-id, gra...
 					Value string `xml:"Value"` // 7601213, NSB:Quay:7601213...
-				} `xml:"KeyValue"`
-			} `xml:"keyList"`
+				} `xml:"KeyValue" json:"keyvalue,omitempty"`
+			} `xml:"keyList" json:"keylist,omitempty"`
 			Centroid struct {
-				Text     string `xml:",chardata"`
 				Location struct {
-					Text      string `xml:",chardata"`
 					Longitude string `xml:"Longitude"` // 11.620069, 9.895932, 11.1...
 					Latitude  string `xml:"Latitude"`  // 63.444097, 59.146811, 62....
-				} `xml:"Location"`
-			} `xml:"Centroid"`
+				} `xml:"Location" json:"location,omitempty"`
+			} `xml:"Centroid" json:"centroid,omitempty"`
 			OtherTransportModes string `xml:"OtherTransportModes"`
 			PrivateCode         struct {
-				Text string `xml:",chardata"` // 1, 1, 1, 1, 1, 1, 01, 01,...
-				Type string `xml:"type,attr"`
-			} `xml:"PrivateCode"`
+				Text string `xml:",chardata" json:"text,omitempty"` // 1, 1, 1, 1, 1, 1, 01, 01,...
+				Type string `xml:"type,attr" json:"type,omitempty"`
+			} `xml:"PrivateCode" json:"privatecode,omitempty"`
 			PublicCode     string `xml:"PublicCode"`     // 1, 1, 1, 1, 1, 1, O, 2, 1...
 			CompassBearing string `xml:"CompassBearing"` // 201.0, 59.0, 34.0, 9.0, 3...
 			Name           struct {
-				Text string `xml:",chardata"` // Bukkholmveien 1, Ise spor...
-				Lang string `xml:"lang,attr"`
-			} `xml:"Name"`
+				Text string `xml:",chardata" json:"text,omitempty"` // Bukkholmveien 1, Ise spor...
+				Lang string `xml:"lang,attr" json:"lang,omitempty"`
+			} `xml:"Name" json:"name,omitempty"`
 			Description struct {
-				Text string `xml:",chardata"` // Retning Frognerseteren, R...
-				Lang string `xml:"lang,attr"`
-			} `xml:"Description"`
+				Text string `xml:",chardata" json:"text,omitempty"` // Retning Frognerseteren, R...
+				Lang string `xml:"lang,attr" json:"lang,omitempty"`
+			} `xml:"Description" json:"description,omitempty"`
 			PlaceEquipments struct {
-				Text        string `xml:",chardata"`
-				ID          string `xml:"id,attr"`
+				ID          string `xml:"id,attr" json:"id,omitempty"`
 				GeneralSign []struct {
-					Text            string `xml:",chardata"`
-					Modification    string `xml:"modification,attr"`
-					Version         string `xml:"version,attr"`
-					ID              string `xml:"id,attr"`
+					Modification    string `xml:"modification,attr" json:"modification,omitempty"`
+					Version         string `xml:"version,attr" json:"version,omitempty"`
+					ID              string `xml:"id,attr" json:"id,omitempty"`
 					PrivateCode     string `xml:"PrivateCode"`     // 512, 512, 512, 512, 512, ...
 					SignContentType string `xml:"SignContentType"` // transportMode, transportM...
 					Content         struct {
-						Text string `xml:",chardata"` // Timetable, Timetable, Tim...
-						Lang string `xml:"lang,attr"`
-					} `xml:"Content"`
-				} `xml:"GeneralSign"`
+						Text string `xml:",chardata" json:"text,omitempty"` // Timetable, Timetable, Tim...
+						Lang string `xml:"lang,attr" json:"lang,omitempty"`
+					} `xml:"Content" json:"content,omitempty"`
+				} `xml:"GeneralSign" json:"generalsign,omitempty"`
 				ShelterEquipment []struct {
-					Text         string `xml:",chardata"`
-					Modification string `xml:"modification,attr"`
-					Version      string `xml:"version,attr"`
-					ID           string `xml:"id,attr"`
+					Modification string `xml:"modification,attr" json:"modification,omitempty"`
+					Version      string `xml:"version,attr" json:"version,omitempty"`
+					ID           string `xml:"id,attr" json:"id,omitempty"`
 					Enclosed     string `xml:"Enclosed"` // true, true, true, true, t...
 					Seats        string `xml:"Seats"`    // 1, 1, 1, 1, 1, 1, 1, 1, 1...
 					StepFree     string `xml:"StepFree"` // false, false, false, fals...
-				} `xml:"ShelterEquipment"`
+				} `xml:"ShelterEquipment" json:"shelterequipment,omitempty"`
 				WaitingRoomEquipment []struct {
-					Text         string `xml:",chardata"`
-					Modification string `xml:"modification,attr"`
-					Version      string `xml:"version,attr"`
-					ID           string `xml:"id,attr"`
+					Modification string `xml:"modification,attr" json:"modification,omitempty"`
+					Version      string `xml:"version,attr" json:"version,omitempty"`
+					ID           string `xml:"id,attr" json:"id,omitempty"`
 					Sanitary     string `xml:"Sanitary"`
 					Seats        string `xml:"Seats"`    // 1, 0
 					StepFree     string `xml:"StepFree"` // false, false
 					Heated       string `xml:"Heated"`   // false, false
-				} `xml:"WaitingRoomEquipment"`
+				} `xml:"WaitingRoomEquipment" json:"waitingroomequipment,omitempty"`
 				SanitaryEquipment struct {
-					Text                 string `xml:",chardata"`
-					Modification         string `xml:"modification,attr"`
-					Version              string `xml:"version,attr"`
-					ID                   string `xml:"id,attr"`
+					Modification         string `xml:"modification,attr" json:"modification,omitempty"`
+					Version              string `xml:"version,attr" json:"version,omitempty"`
+					ID                   string `xml:"id,attr" json:"id,omitempty"`
 					Gender               string `xml:"Gender"` // both, both, both, both, b...
 					SanitaryFacilityList string `xml:"SanitaryFacilityList"`
 					PaymentMethods       string `xml:"PaymentMethods"`
 					NumberOfToilets      string `xml:"NumberOfToilets"` // 1
-				} `xml:"SanitaryEquipment"`
+				} `xml:"SanitaryEquipment" json:"sanitaryequipment,omitempty"`
 				TicketingEquipment struct {
-					Text                    string `xml:",chardata"`
-					Modification            string `xml:"modification,attr"`
-					Version                 string `xml:"version,attr"`
-					ID                      string `xml:"id,attr"`
+					Modification            string `xml:"modification,attr" json:"modification,omitempty"`
+					Version                 string `xml:"version,attr" json:"version,omitempty"`
+					ID                      string `xml:"id,attr" json:"id,omitempty"`
 					VehicleModes            string `xml:"VehicleModes"`
 					TicketMachines          string `xml:"TicketMachines"`   // true, true, true, true, t...
 					NumberOfMachines        string `xml:"NumberOfMachines"` // 1, 1, 1, 1, 1, 1, 1, 1, 1...
@@ -172,62 +148,54 @@ type StopPlace struct {
 					PaymentMethods          string `xml:"PaymentMethods"`
 					TicketTypesAvailable    string `xml:"TicketTypesAvailable"`
 					ScopeOfTicketsAvailable string `xml:"ScopeOfTicketsAvailable"`
-				} `xml:"TicketingEquipment"`
-			} `xml:"placeEquipments"`
+				} `xml:"TicketingEquipment" json:"ticketingequipment,omitempty"`
+			} `xml:"placeEquipments" json:"placeequipments,omitempty"`
 			AccessibilityAssessment struct {
-				Text                   string `xml:",chardata"`
-				Modification           string `xml:"modification,attr"`
-				Version                string `xml:"version,attr"`
-				ID                     string `xml:"id,attr"`
+				Modification           string `xml:"modification,attr" json:"modification,omitempty"`
+				Version                string `xml:"version,attr" json:"version,omitempty"`
+				ID                     string `xml:"id,attr" json:"id,omitempty"`
 				MobilityImpairedAccess string `xml:"MobilityImpairedAccess"` // partial, partial, partial...
 				Limitations            struct {
-					Text                    string `xml:",chardata"`
 					AccessibilityLimitation struct {
-						Text                    string `xml:",chardata"`
-						Modification            string `xml:"modification,attr"`
-						Version                 string `xml:"version,attr"`
-						ID                      string `xml:"id,attr"`
+						Modification            string `xml:"modification,attr" json:"modification,omitempty"`
+						Version                 string `xml:"version,attr" json:"version,omitempty"`
+						ID                      string `xml:"id,attr" json:"id,omitempty"`
 						WheelchairAccess        string `xml:"WheelchairAccess"`        // false, false, false, true...
 						StepFreeAccess          string `xml:"StepFreeAccess"`          // false, true, false, true,...
 						EscalatorFreeAccess     string `xml:"EscalatorFreeAccess"`     // unknown, unknown, unknown...
 						LiftFreeAccess          string `xml:"LiftFreeAccess"`          // unknown, unknown, unknown...
 						AudibleSignalsAvailable string `xml:"AudibleSignalsAvailable"` // unknown, unknown, unknown...
-					} `xml:"AccessibilityLimitation"`
-				} `xml:"limitations"`
-			} `xml:"AccessibilityAssessment"`
+					} `xml:"AccessibilityLimitation" json:"accessibilitylimitation,omitempty"`
+				} `xml:"limitations" json:"limitations,omitempty"`
+			} `xml:"AccessibilityAssessment" json:"accessibilityassessment,omitempty"`
 			ValidBetween struct {
-				Text     string `xml:",chardata"`
 				FromDate string `xml:"FromDate"` // 2017-06-21T17:01:09.146, ...
-			} `xml:"ValidBetween"`
-		} `xml:"Quay"`
-	} `xml:"quays"`
+			} `xml:"ValidBetween" json:"validbetween,omitempty"`
+		} `xml:"Quay" json:"quay,omitempty"`
+	} `xml:"quays" json:"quays,omitempty"`
 	PlaceEquipments struct {
-		Text             string `xml:",chardata"`
-		ID               string `xml:"id,attr"`
+		ID               string `xml:"id,attr" json:"id,omitempty"`
 		ShelterEquipment struct {
-			Text         string `xml:",chardata"`
-			Modification string `xml:"modification,attr"`
-			Version      string `xml:"version,attr"`
-			ID           string `xml:"id,attr"`
+			Modification string `xml:"modification,attr" json:"modification,omitempty"`
+			Version      string `xml:"version,attr" json:"version,omitempty"`
+			ID           string `xml:"id,attr" json:"id,omitempty"`
 			Enclosed     string `xml:"Enclosed"` // true, true, false, false,...
 			Seats        string `xml:"Seats"`    // 1, 1, 1, 1, 1, 1, 1, 1, 1...
 			StepFree     string `xml:"StepFree"` // false, false, false, fals...
-		} `xml:"ShelterEquipment"`
+		} `xml:"ShelterEquipment" json:"shelterequipment,omitempty"`
 		WaitingRoomEquipment struct {
-			Text         string `xml:",chardata"`
-			Modification string `xml:"modification,attr"`
-			Version      string `xml:"version,attr"`
-			ID           string `xml:"id,attr"`
+			Modification string `xml:"modification,attr" json:"modification,omitempty"`
+			Version      string `xml:"version,attr" json:"version,omitempty"`
+			ID           string `xml:"id,attr" json:"id,omitempty"`
 			Sanitary     string `xml:"Sanitary"`
 			Seats        string `xml:"Seats"`    // 1, 1, 1, 1, 1, 1, 1, 1, 1...
 			StepFree     string `xml:"StepFree"` // false, false, false, fals...
 			Heated       string `xml:"Heated"`   // false, false, false, fals...
-		} `xml:"WaitingRoomEquipment"`
+		} `xml:"WaitingRoomEquipment" json:"waitingroomequipment,omitempty"`
 		TicketingEquipment struct {
-			Text                    string `xml:",chardata"`
-			Modification            string `xml:"modification,attr"`
-			Version                 string `xml:"version,attr"`
-			ID                      string `xml:"id,attr"`
+			Modification            string `xml:"modification,attr" json:"modification,omitempty"`
+			Version                 string `xml:"version,attr" json:"version,omitempty"`
+			ID                      string `xml:"id,attr" json:"id,omitempty"`
 			VehicleModes            string `xml:"VehicleModes"`
 			TicketMachines          string `xml:"TicketMachines"`   // true, true, true, true, t...
 			NumberOfMachines        string `xml:"NumberOfMachines"` // 1, 1, 1, 1, 1, 1, 2, 2, 1...
@@ -236,61 +204,54 @@ type StopPlace struct {
 			PaymentMethods          string `xml:"PaymentMethods"`
 			TicketTypesAvailable    string `xml:"TicketTypesAvailable"`
 			ScopeOfTicketsAvailable string `xml:"ScopeOfTicketsAvailable"`
-		} `xml:"TicketingEquipment"`
+		} `xml:"TicketingEquipment" json:"ticketingequipment,omitempty"`
 		GeneralSign struct {
-			Text            string `xml:",chardata"`
-			Modification    string `xml:"modification,attr"`
-			Version         string `xml:"version,attr"`
-			ID              string `xml:"id,attr"`
+			Modification    string `xml:"modification,attr" json:"modification,omitempty"`
+			Version         string `xml:"version,attr" json:"version,omitempty"`
+			ID              string `xml:"id,attr" json:"id,omitempty"`
 			PrivateCode     string `xml:"PrivateCode"`     // 512, 512, 512, 512, 512, ...
 			SignContentType string `xml:"SignContentType"` // transportMode, transportM...
-		} `xml:"GeneralSign"`
+		} `xml:"GeneralSign" json:"generalsign,omitempty"`
 		SanitaryEquipment struct {
-			Text                 string `xml:",chardata"`
-			Modification         string `xml:"modification,attr"`
-			Version              string `xml:"version,attr"`
-			ID                   string `xml:"id,attr"`
+			Modification         string `xml:"modification,attr" json:"modification,omitempty"`
+			Version              string `xml:"version,attr" json:"version,omitempty"`
+			ID                   string `xml:"id,attr" json:"id,omitempty"`
 			Gender               string `xml:"Gender"` // both, both, both, both, b...
 			SanitaryFacilityList string `xml:"SanitaryFacilityList"`
 			PaymentMethods       string `xml:"PaymentMethods"`
 			NumberOfToilets      string `xml:"NumberOfToilets"` // 1, 1, 1, 1, 1, 1, 1, 1, 1...
-		} `xml:"SanitaryEquipment"`
-	} `xml:"placeEquipments"`
+		} `xml:"SanitaryEquipment" json:"sanitaryequipment,omitempty"`
+	} `xml:"placeEquipments" json:"placeequipments,omitempty"`
 	Description struct {
-		Text string `xml:",chardata"` // skole, Oppøyen, i Sognad...
-		Lang string `xml:"lang,attr"`
-	} `xml:"Description"`
+		Text string `xml:",chardata" json:"text,omitempty"` // skole, Oppøyen, i Sognad...
+		Lang string `xml:"lang,attr" json:"lang,omitempty"`
+	} `xml:"Description" json:"description,omitempty"`
 	AlternativeNames struct {
-		Text            string `xml:",chardata"`
 		AlternativeName []struct {
-			Text         string `xml:",chardata"`
-			Modification string `xml:"modification,attr"`
-			Version      string `xml:"version,attr"`
-			ID           string `xml:"id,attr"`
+			Modification string `xml:"modification,attr" json:"modification,omitempty"`
+			Version      string `xml:"version,attr" json:"version,omitempty"`
+			ID           string `xml:"id,attr" json:"id,omitempty"`
 			NameType     string `xml:"NameType"` // alias, alias, alias, alia...
 			Name         struct {
-				Text string `xml:",chardata"` // Hoelsgård hotel, Nysvemo...
-				Lang string `xml:"lang,attr"`
-			} `xml:"Name"`
-		} `xml:"AlternativeName"`
-	} `xml:"alternativeNames"`
+				Text string `xml:",chardata" json:"text,omitempty"` // Hoelsgård hotel, Nysvemo...
+				Lang string `xml:"lang,attr" json:"lang,omitempty"`
+			} `xml:"Name" json:"name,omitempty"`
+		} `xml:"AlternativeName" json:"alternativename,omitempty"`
+	} `xml:"alternativeNames" json:"alternativenames,omitempty"`
 	RailSubmode   string `xml:"RailSubmode"`  // touristRailway, touristRa...
 	WaterSubmode  string `xml:"WaterSubmode"` // localCarFerry, localPasse...
 	MetroSubmode  string `xml:"MetroSubmode"` // metro, metro, metro, metr...
 	ParentSiteRef struct {
-		Text    string `xml:",chardata"`
-		Ref     string `xml:"ref,attr"`
-		Version string `xml:"version,attr"`
-	} `xml:"ParentSiteRef"`
+		Ref     string `xml:"ref,attr" json:"ref,omitempty"`
+		Version string `xml:"version,attr" json:"version,omitempty"`
+	} `xml:"ParentSiteRef" json:"parentsiteref,omitempty"`
 	AirSubmode       string `xml:"AirSubmode"`       // helicopterService, unknow...
 	TelecabinSubmode string `xml:"TelecabinSubmode"` // telecabin, telecabin
 	AdjacentSites    struct {
-		Text    string `xml:",chardata"`
 		SiteRef struct {
-			Text string `xml:",chardata"`
-			Ref  string `xml:"ref,attr"`
-		} `xml:"SiteRef"`
-	} `xml:"adjacentSites"`
+			Ref string `xml:"ref,attr" json:"ref,omitempty"`
+		} `xml:"SiteRef" json:"siteref,omitempty"`
+	} `xml:"adjacentSites" json:"adjacentsites,omitempty"`
 	TramSubmode string `xml:"TramSubmode"` // localTram, localTram, loc...
 	PrivateCode string `xml:"PrivateCode"` // 1
 }
