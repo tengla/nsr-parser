@@ -17,6 +17,5 @@
 dist
 
 nsr.current.xml
-nsr.current.xml.gz
 nsr.current.json.gz
 nsr.current.json
