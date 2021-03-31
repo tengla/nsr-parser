@@ -1,2 +1,8 @@
-# nsr-parser
-Parse NSR records in Golang
+# NSR XML Parser
+Parse NSR records into Golang
+
+```
+make
+# Then run
+./dist/parser
+```
