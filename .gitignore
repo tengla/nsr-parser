@@ -15,7 +15,6 @@
 # vendor/
 
 dist
-
-nsr.current.xml
-nsr.current.json.gz
-nsr.current.json
+*.xml
+*.json.gz
+*.json
