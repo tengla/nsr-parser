@@ -6,16 +6,15 @@ import (
 	"time"
 )
 
-func mychan(ctx context.Context) chan int {
-	count := 0
-	ch := make(chan int)
+func mychan(ctx context.Context) chan byte {
+	chars := "\t\nabc"
+	ch := make(chan byte)
 	go func() {
 		t, _ := ctx.Deadline()
-		for {
-			ch <- count
-			count += 1
+		for i := 0; i < len(chars); i++ {
+			ch <- chars[i]
 			time.Sleep(time.Second)
-			if count > 10 || time.Now().After(t) {
+			if time.Now().After(t) {
 				break
 			}
 		}
