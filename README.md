@@ -1,5 +1,5 @@
 # NSR XML Parser
-Parse NSR records into Golang
+Parse NSR records with Golang
 
 ```
 make
