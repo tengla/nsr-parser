@@ -42,9 +42,7 @@ func importRecords(file string, jsonout bool) {
 		}
 	}
 	duration := time.Since(start)
-	if jsonout {
-		fmt.Printf("{\"id\":\"Record count: %d, duration: %s\"}\n", count, duration)
-	} else {
+	if !jsonout {
 		fmt.Printf("\nRecord count: %d, duration: %s\n", count, duration)
 	}
 }
