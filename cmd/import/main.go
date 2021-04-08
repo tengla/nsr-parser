@@ -11,10 +11,11 @@ import (
 )
 
 var (
-	xmlfile = flag.String("xmlfile", "./nsr.current.xml", "XML source file")
+	xmlfile = flag.String("file", "./nsr.current.xml", "XML source file")
 	jsonout = flag.Bool("jsonout", false, "JSON output")
 )
 
+// importRecords
 func importRecords(file string, jsonout bool) {
 
 	ctx, cancel := context.WithTimeout(
