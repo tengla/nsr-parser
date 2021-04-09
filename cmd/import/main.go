@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"runtime"
 	"time"
 
 	"github.com/tengla/nsr-parser/stopplace"
@@ -47,8 +48,28 @@ func importRecords(file string, jsonout bool) {
 		fmt.Printf("\nRecord count: %d, duration: %s\n", count, duration)
 	}
 }
+func b2mb(n uint64) float64 {
+	return float64(n) / 1024 / 1024
+}
+
+func printMemUsage() string {
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	s := fmt.Sprintf("Alloc = %.2f Mb", b2mb(m.Alloc))
+	s = s + fmt.Sprintf("\tTotalAlloc = %.2f Mb", b2mb(m.TotalAlloc))
+	s = s + fmt.Sprintf("\tHeapAlloc = %.2f Mb", b2mb(m.HeapAlloc))
+	s = s + fmt.Sprintf("\tSys = %.2f Mb", b2mb(m.Sys))
+	s = s + fmt.Sprintf("\tNumGC = %d\n", m.NumGC)
+	return s
+}
 
 func main() {
 	flag.Parse()
+	s := printMemUsage()
+	mem := []string{s}
 	importRecords(*xmlfile, *jsonout)
+	s = printMemUsage()
+	mem = append(mem, s)
+	fmt.Printf("%v\n", mem)
 }
