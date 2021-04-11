@@ -13,6 +13,7 @@ import (
 )
 
 var (
+	file    = flag.String("file", "./nsr.current.json", "json source file")
 	key     = flag.String("key", "", "The key to look for")
 	val     = flag.String("value", "", "The value to look for")
 	jsonout = flag.Bool("jsonout", false, "JSON output")
@@ -42,7 +43,7 @@ func printStop(sp stopplace.StopPlace) {
 
 func main() {
 	flag.Parse()
-	f, err := os.Open("./nsr.current.json")
+	f, err := os.Open(*file)
 	failOnError(err)
 	scanner := bufio.NewScanner(f)
 	onNewLine := func(data []byte, atEOF bool) (advance int, token []byte, err error) {
