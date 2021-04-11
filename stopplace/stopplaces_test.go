@@ -2,7 +2,6 @@ package stopplace
 
 import (
 	"context"
-	"log"
 	"os"
 	"testing"
 	"time"
@@ -28,7 +27,7 @@ func TestStopPlaces(t *testing.T) {
 			}
 		}
 		if !found {
-			log.Fatal("No records found")
+			t.Fatal("Did not find NSR:StopPlace:5")
 		}
 	})
 }
