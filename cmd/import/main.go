@@ -48,8 +48,10 @@ func importRecords(file string, jsonout bool) {
 		fmt.Printf("\nRecord count: %d, duration: %s\n", count, duration)
 	}
 }
+
+// bytes to megabytes
 func b2mb(n uint64) float64 {
-	return float64(n) / 1024 / 1024
+	return float64(n / 1024 / 1024)
 }
 
 func printMemUsage() string {
