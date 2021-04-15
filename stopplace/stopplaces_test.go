@@ -10,7 +10,7 @@ import (
 func TestStopPlaces(t *testing.T) {
 	t.Run("StopPlaces", func(t *testing.T) {
 		d, _ := os.Getwd()
-		file := d + "/../nsr.test.xml"
+		file := d + "/../data/nsr.test.xml"
 		ctx, cancel := context.WithTimeout(
 			context.Background(),
 			// dont exceed 30 seconds

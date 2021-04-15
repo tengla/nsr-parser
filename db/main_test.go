@@ -6,7 +6,9 @@ import (
 )
 
 func TestDb(t *testing.T) {
+
 	var conf Config
+
 	t.Run("InitDb", func(t *testing.T) {
 		conf = Config{
 			Host:         "http://127.0.0.1:8529",
