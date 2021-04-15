@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PublicationDelivery xmlns="http://www.netex.org.uk/netex" xmlns:ns2="http://www.opengis.net/gml/3.2" xmlns:ns3="http://www.siri.org.uk/siri" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="7424" xsi:schemaLocation="">
+  <PublicationTimestamp>2021-03-30T01:52:55.548</PublicationTimestamp>
+  <ParticipantRef>NSR</ParticipantRef>
+  <dataObjects>
+    <SiteFrame modification="new" version="1" id="NSR:SiteFrame:53795091">
+      <Description>Site frame ExportParams{topographicPlaceExportMode=RELEVANT, municipalityReferences=[], countyReferences=[], countryReferences=[], stopPlaceSearch=StopPlaceSearch{stopPlaceType=[], netexIdList=[], allVersions=false, versionValidity=CURRENT, withoutLocationOnly=false, withoutQuaysOnly=false, withDuplicatedQuayImportedIds=false, withTags=[], tags=[], page=0, size=20}, tariffZoneExportMode=RELEVANT, serviceFrameExportMode=NONE}</Description>
+
+      <stopPlaces>
+        <StopPlace created="2017-06-19T19:12:29.887" changed="2021-03-18T12:59:23.149" modification="new" version="1" id="NSR:StopPlace:5">
+          <ValidBetween>
+            <FromDate>2017-06-19T19:12:29.887</FromDate>
+          </ValidBetween>
+          <keyList>
+            <KeyValue>
+              <Key>jbvCode</Key>
+              <Value>GU</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>uicCode</Key>
+              <Value>7601213</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>iffCode</Key>
+              <Value>7601213</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>lisaId</Key>
+              <Value>1213</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>imported-id</Key>
+              <Value>NSB:StopPlace:760121330</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>IS_PARENT_STOP_PLACE</Key>
+              <Value>false</Value>
+            </KeyValue>
+          </keyList>
+          <Name lang="nor">Gudå</Name>
+          <Centroid>
+            <Location>
+              <Longitude>11.620069</Longitude>
+              <Latitude>63.444097</Latitude>
+            </Location>
+          </Centroid>
+          <AccessibilityAssessment modification="new" version="1" id="NSR:AccessibilityAssessment:5">
+            <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+            <limitations>
+              <AccessibilityLimitation modification="new" version="1" id="2">
+                <WheelchairAccess>true</WheelchairAccess>
+                <StepFreeAccess>true</StepFreeAccess>
+              </AccessibilityLimitation>
+            </limitations>
+          </AccessibilityAssessment>
+          <TopographicPlaceRef ref="KVE:TopographicPlace:5034" created="2021-03-30T01:53:11.903" version="9"/>
+          <TransportMode>bus</TransportMode>
+          <BusSubmode>railReplacementBus</BusSubmode>
+          <OtherTransportModes></OtherTransportModes>
+          <tariffZones>
+            <TariffZoneRef ref="ATB:TariffZone:9" version="1"/>
+          </tariffZones>
+          <StopPlaceType>onstreetBus</StopPlaceType>
+          <Weighting>interchangeAllowed</Weighting>
+          <quays>
+            <Quay modification="new" version="1" id="NSR:Quay:4">
+              <keyList>
+                <KeyValue>
+                  <Key>uicCode</Key>
+                  <Value>7601213</Value>
+                </KeyValue>
+                <KeyValue>
+                  <Key>imported-id</Key>
+                  <Value>NSB:Quay:760121330</Value>
+                </KeyValue>
+              </keyList>
+              <Centroid>
+                <Location>
+                  <Longitude>11.620069</Longitude>
+                  <Latitude>63.444097</Latitude>
+                </Location>
+              </Centroid>
+              <OtherTransportModes></OtherTransportModes>
+            </Quay>
+          </quays>
+        </StopPlace>
+        <StopPlace created="2017-06-19T19:12:35.998" changed="2021-02-02T10:37:11.257" modification="new" version="1" id="NSR:StopPlace:92">
+          <ValidBetween>
+            <FromDate>2017-06-19T19:12:35.998</FromDate>
+          </ValidBetween>
+          <keyList>
+            <KeyValue>
+              <Key>jbvCode</Key>
+              <Value>EIK</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>uicCode</Key>
+              <Value>7601521</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>grailsId</Key>
+              <Value>120</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>iffCode</Key>
+              <Value>7601521</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>lisaId</Key>
+              <Value>1521</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>imported-id</Key>
+              <Value>NSB:StopPlace:07601521,NSB:StopPlace:007601521,FLT:StopPlace:7601521,RUT:StopPlace:7095210</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>tpsiId</Key>
+              <Value>007601521</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>IS_PARENT_STOP_PLACE</Key>
+              <Value>false</Value>
+            </KeyValue>
+          </keyList>
+          <Name lang="nor">Eikenes stasjon</Name>
+          <Centroid>
+            <Location>
+              <Longitude>9.895932</Longitude>
+              <Latitude>59.146811</Latitude>
+            </Location>
+          </Centroid>
+          <AccessibilityAssessment modification="new" version="1" id="NSR:AccessibilityAssessment:92">
+            <MobilityImpairedAccess>partial</MobilityImpairedAccess>
+            <limitations>
+              <AccessibilityLimitation modification="new" version="1" id="38">
+                <WheelchairAccess>false</WheelchairAccess>
+                <StepFreeAccess>false</StepFreeAccess>
+              </AccessibilityLimitation>
+            </limitations>
+          </AccessibilityAssessment>
+          <TopographicPlaceRef ref="KVE:TopographicPlace:3805" created="2021-03-30T01:53:11.926" version="2"/>
+          <placeEquipments id="NSR:PlaceEquipment:13">
+            <ShelterEquipment modification="new" version="1" id="40">
+              <Enclosed>true</Enclosed>
+            </ShelterEquipment>
+          </placeEquipments>
+          <TransportMode>rail</TransportMode>
+          <OtherTransportModes></OtherTransportModes>
+          <tariffZones>
+            <TariffZoneRef ref="VKT:TariffZone:704" version="1"/>
+            <TariffZoneRef ref="VOT:TariffZone:4" version="2"/>
+          </tariffZones>
+          <StopPlaceType>railStation</StopPlaceType>
+          <Weighting>interchangeAllowed</Weighting>
+          <quays>
+            <Quay modification="new" version="1" id="NSR:Quay:151">
+              <keyList>
+                <KeyValue>
+                  <Key>grails-platformId</Key>
+                  <Value>736270</Value>
+                </KeyValue>
+                <KeyValue>
+                  <Key>uicCode</Key>
+                  <Value>7601521</Value>
+                </KeyValue>
+                <KeyValue>
+                  <Key>imported-id</Key>
+                  <Value>NSB:Quay:007601521,FLT:Quay:7601521,NSB:Quay:0076015211,NSB:Quay:076015211</Value>
+                </KeyValue>
+                <KeyValue>
+                  <Key>tpsiId</Key>
+                  <Value>760152101</Value>
+                </KeyValue>
+              </keyList>
+              <PrivateCode type="StopPoint">1</PrivateCode>
+              <Centroid>
+                <Location>
+                  <Longitude>9.895932</Longitude>
+                  <Latitude>59.146811</Latitude>
+                </Location>
+              </Centroid>
+              <OtherTransportModes></OtherTransportModes>
+              <PublicCode>1</PublicCode>
+            </Quay>
+          </quays>
+        </StopPlace>
+      </stopPlaces>
+    </SiteFrame>
+  </dataObjects>
+</PublicationDelivery>
