@@ -57,7 +57,16 @@ func main() {
 		}
 		return 0, data, bufio.ErrFinalToken
 	}
+
 	scanner.Split(onNewLine)
+
+	var re *regexp.Regexp
+
+	if len(*val) > 0 {
+		re, err = regexp.Compile(*val)
+		failOnError(err)
+	}
+
 	for scanner.Scan() {
 		var sp stopplace.StopPlace
 		bytes := scanner.Bytes()
@@ -72,8 +81,6 @@ func main() {
 		if *key == "ID" {
 			printStop(sp)
 		} else if *key == "Name" && len(*val) > 0 {
-			re, err := regexp.Compile(*val)
-			failOnError(err)
 			if re.MatchString(sp.Name.Text) {
 				printStop(sp)
 			}
@@ -85,7 +92,7 @@ func main() {
 			}
 		} else if len(*key) > 0 && len(*val) > 0 {
 			for _, kv := range sp.KeyList.KeyValue {
-				if kv.Key == *key && kv.Value == *val {
+				if kv.Key == *key && re.MatchString(kv.Value) {
 					printStop(sp)
 				}
 			}
