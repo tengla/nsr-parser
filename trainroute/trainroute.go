@@ -21,11 +21,11 @@ func NewOtrServer() *OtrServer {
 }
 
 // GetItem - rpc impl
-func (s *OtrServer) GetItems(ctx context.Context, ids *pb.OtrIdList) (*pb.OperatingTrainRouteList, error) {
-	list := createList()
+func (s *OtrServer) GetItems(ctx context.Context, needles *pb.OtrIdList) (*pb.OperatingTrainRouteList, error) {
+	haystack := createList()
 	found := &pb.OperatingTrainRouteList{}
-	for _, oid := range list.TrainIds {
-		for _, id := range ids.TrainIds {
+	for _, oid := range haystack.TrainIds {
+		for _, id := range needles.TrainIds {
 			if oid.TrainId == id.TrainId {
 				found.Routes = append(found.Routes, &pb.OperatingTrainRoute{
 					TrainId:   oid.TrainId,
