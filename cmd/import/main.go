@@ -54,7 +54,8 @@ func b2mb(n uint64) float64 {
 	return float64(n / 1024 / 1024)
 }
 
-func printMemUsage() string {
+// PrintMemUsage
+func PrintMemUsage() string {
 
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
@@ -68,10 +69,5 @@ func printMemUsage() string {
 
 func main() {
 	flag.Parse()
-	s := printMemUsage()
-	mem := []string{s}
 	importRecords(*xmlfile, *jsonout)
-	s = printMemUsage()
-	mem = append(mem, s)
-	fmt.Printf("%v\n", mem)
 }
