@@ -73,7 +73,6 @@ func main() {
 		case isPathMatch(r, "GET", "/NSR:StopPlace:[0-9]+"):
 			segments := strings.Split(r.URL.Path, "/")
 			id := segments[len(segments)-1]
-			// stops := make([]stopplace.StopPlace, 0)
 			var stop stopplace.StopPlace
 			for _, s := range docs {
 				if s.ID == id {
@@ -107,7 +106,9 @@ func main() {
 			json.NewEncoder(rw).Encode(stops)
 		default:
 			message := map[string]string{
-				"/name": "curl -d '{\"Value\":\"oslo s\"}' server:port/name",
+				"/keylist":              "method: POST, payload: {\"Key\":\"key\",\"Value\":\"value\"}",
+				"/name":                 "method: POST, payload: {\"Value\":\"Oslo S\"}",
+				"/NSR:StopPlace:[0-9]+": "method: GET",
 			}
 			json.NewEncoder(rw).Encode(message)
 		}
