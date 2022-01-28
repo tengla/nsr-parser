@@ -1,19 +1,19 @@
-FROM golang:latest AS build
+FROM golang:alpine AS build
+
 COPY cmd src/cmd
-COPY db src/db
 COPY stopplace src/stopplace
+COPY trainroute src/trainroute
 COPY go.mod src
 COPY go.sum src
 COPY Makefile src
-RUN cd src && make all
 
-FROM golang:alpine AS content
-COPY --from=build /go/src/dist bin
-COPY nsr.current.xml.gz nsr.current.xml.gz
-RUN gunzip nsr.current.xml.gz
-RUN ["/bin/sh", "-c", "import -jsonout >nsr.current.json"]
+RUN apk add make && \
+  cd src && \
+  make all
 
 FROM golang:alpine
-COPY --from=content /go/nsr.current.json nsr.current.json
-COPY --from=build /go/src/dist bin
-CMD ["find", "-key", "uicCode", "-value", "7601320", "-jsonout"]
+COPY nsr.current.xml nsr.current.xml
+COPY --from=build /go/src/dist/import bin/import
+COPY --from=build /go/src/dist/server bin/server
+RUN import -jsonout > nsr.current.json
+CMD ["server"]

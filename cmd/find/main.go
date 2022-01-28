@@ -7,16 +7,15 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
+	"strings"
 
 	"github.com/tengla/nsr-parser/stopplace"
 )
 
 var (
-	file    = flag.String("file", "./nsr.current.json", "json source file")
-	key     = flag.String("key", "", "The key to look for")
-	val     = flag.String("value", "", "The value to look for")
-	jsonout = flag.Bool("jsonout", false, "JSON output")
+	file       = flag.String("file", "./nsr.current.json", "json source file")
+	parameters = flag.String("parameters", "", "json-struct containing search parameters")
+	jsonout    = flag.Bool("jsonout", false, "JSON output")
 )
 
 func failOnError(err error) {
@@ -25,27 +24,17 @@ func failOnError(err error) {
 	}
 }
 
-func printStop(sp stopplace.StopPlace) {
-	if *jsonout {
-		bytes, err := json.Marshal(sp)
-		failOnError(err)
-		fmt.Println(string(bytes))
-		fmt.Println("")
-		return
-	}
-	fmt.Println("")
-	fmt.Printf("ID='%s', Name='%s'\n ", sp.ID, sp.Name.Text)
-	for _, kv := range sp.KeyList.KeyValue {
-		fmt.Printf("%s='%s', ", kv.Key, kv.Value)
-	}
-	fmt.Println("")
+func getParams() stopplace.ParamMap {
+	var params stopplace.SearchParams
+	json.Unmarshal([]byte(*parameters), &params)
+	return params.ExtractParams()
 }
 
-func main() {
-	flag.Parse()
+func getScanner() *bufio.Scanner {
 	f, err := os.Open(*file)
 	failOnError(err)
 	scanner := bufio.NewScanner(f)
+	// detect newline
 	onNewLine := func(data []byte, atEOF bool) (advance int, token []byte, err error) {
 		for i := 0; i < len(data); i++ {
 			if data[i] == '\n' /* 10 newline*/ {
@@ -57,16 +46,50 @@ func main() {
 		}
 		return 0, data, bufio.ErrFinalToken
 	}
-
 	scanner.Split(onNewLine)
+	return scanner
+}
 
-	var re *regexp.Regexp
+// color table
+var colors = map[string]string{
+	"reset":  "\033[0m",
+	"red":    "\033[31m",
+	"green":  "\033[32m",
+	"yellow": "\033[33m",
+	"blue":   "\033[34m",
+	"purple": "\033[35m",
+	"cyan":   "\033[36m",
+	"white":  "\033[37m",
+}
 
-	if len(*val) > 0 {
-		re, err = regexp.Compile(*val)
+// printStop - print StopPlace to stdout
+func printStop(sp stopplace.StopPlace) {
+	if *jsonout {
+		bytes, err := json.Marshal(sp)
 		failOnError(err)
+		fmt.Println(string(bytes))
+		fmt.Println("")
+		return
 	}
+	fmt.Println("")
+	fmt.Printf("%sStopPlace(%sID='%s', Name='%s', ", colors["white"], colors["purple"], sp.ID, sp.Name.Text)
+	fmt.Printf("Lon=%s, Lat=%s, %skeylist=[",
+		sp.Centroid.Location.Longitude, sp.Centroid.Location.Latitude, colors["yellow"])
+	keyvals := make([]string, 0)
+	for _, kv := range sp.KeyList.KeyValue {
+		item := fmt.Sprintf("%s='%s'", kv.Key, kv.Value)
+		keyvals = append(keyvals, item)
+	}
+	fmt.Printf("%s]%s)%s\n",
+		strings.Join(keyvals, ", "),
+		colors["white"],
+		colors["reset"])
+}
 
+func main() {
+	flag.Parse()
+	params := getParams()
+	scanner := getScanner()
 	for scanner.Scan() {
 		var sp stopplace.StopPlace
 		bytes := scanner.Bytes()
@@ -78,29 +101,8 @@ func main() {
 			fmt.Printf("error parsing json %s\n", err.Error())
 			continue
 		}
-		if *key == "ID" {
-			printStop(sp)
-		} else if *key == "Name" && len(*val) > 0 {
-			if re.MatchString(sp.Name.Text) {
-				printStop(sp)
-			}
-		} else if len(*key) > 0 && len(*val) < 1 {
-			for _, kv := range sp.KeyList.KeyValue {
-				if kv.Key == *key {
-					printStop(sp)
-				}
-			}
-		} else if len(*key) > 0 && len(*val) > 0 {
-			for _, kv := range sp.KeyList.KeyValue {
-				if kv.Key == *key && re.MatchString(kv.Value) {
-					printStop(sp)
-				}
-			}
-		} else {
+		if stopplace.Match(params, sp) {
 			printStop(sp)
 		}
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading input:", err)
 	}
 }

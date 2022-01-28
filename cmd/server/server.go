@@ -6,103 +6,56 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"regexp"
-	"strings"
 
 	"github.com/tengla/nsr-parser/stopplace"
 )
 
-type payload map[string]string
-
-func (p payload) hasEvery(keys ...string) bool {
-	for _, k := range keys {
-		if !p.has(k) {
-			return false
-		}
-	}
-	return true
-}
-
-func (p payload) has(key string) bool {
-	return len(p[key]) > 0
-}
-
-func getStopPlaces() ([]stopplace.StopPlace, error) {
+// GetStopPlaces -talks for itself, no?
+func GetStopPlaces() ([]stopplace.StopPlace, error) {
 	file, err := os.Open("./nsr.current.json")
 	if err != nil {
 		return nil, err
 	}
 	scanner := bufio.NewScanner(file)
-	docs := make([]stopplace.StopPlace, 0)
+	places := make([]stopplace.StopPlace, 0)
 	n := 0
 	for scanner.Scan() {
 		bytes := scanner.Bytes()
 		var v stopplace.StopPlace
 		json.Unmarshal(bytes, &v)
-		docs = append(docs, v)
+		places = append(places, v)
 		n += 1
 		fmt.Printf("\rParsing progress %d", n)
 	}
-	fmt.Printf("\rDone parsing %d docs\n", len(docs))
-	return docs, nil
+	fmt.Printf("\rDone parsing %d docs\n", len(places))
+	return places, nil
 }
 
 func isPath(r *http.Request, method string, path string) bool {
 	return r.Method == method && r.URL.Path == path
 }
 
-func isPathMatch(r *http.Request, method string, path string) bool {
-	fmt.Printf("%s %s\n", r.URL.Path, path)
-	re, _ := regexp.Compile(path)
-	return r.Method == method && re.MatchString(r.URL.Path)
-}
+// MuxHandler
+func MuxHandler(places []stopplace.StopPlace) func(rw http.ResponseWriter, r *http.Request) {
 
-func muxHandler(docs []stopplace.StopPlace) func(rw http.ResponseWriter, r *http.Request) {
 	return func(rw http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%s %s\n", r.Method, r.URL.Path)
 		rw.Header().Add("Content-Type", "application/json; charset=utf-8")
-		var p payload
-		json.NewDecoder(r.Body).Decode(&p)
+		var search_params stopplace.SearchParams
+		json.NewDecoder(r.Body).Decode(&search_params)
 		switch true {
-		case isPathMatch(r, "GET", "/NSR:StopPlace:[0-9]+"):
-			segments := strings.Split(r.URL.Path, "/")
-			id := segments[len(segments)-1]
-			var stop stopplace.StopPlace
-			for _, s := range docs {
-				if s.ID == id {
-					stop = s
+		case isPath(r, "POST", "/"):
+			params := search_params.ExtractParams()
+			fmt.Printf("%+v\n", params)
+			encoder := json.NewEncoder(rw)
+			for _, place := range places {
+				if stopplace.Match(params, place) {
+					encoder.Encode(place)
 				}
 			}
-			json.NewEncoder(rw).Encode(stop)
-		case isPath(r, "POST", "/name") && p.has("Value"):
-			stops := make([]stopplace.StopPlace, 0)
-			re, _ := regexp.Compile("(?i)" + p["Value"])
-			for _, stop := range docs {
-				if re.MatchString(stop.Name.Text) {
-					stops = append(stops, stop)
-				}
-			}
-			json.NewEncoder(rw).Encode(stops)
-		case isPath(r, "POST", "/keylist") && p.hasEvery("Key", "Value"):
-			stops := make([]stopplace.StopPlace, 0)
-			re, err := regexp.Compile(p["Value"])
-			if err != nil {
-				http.Error(rw, "Not allowed", http.StatusMethodNotAllowed)
-			} else {
-				for _, stop := range docs {
-					for _, kv := range stop.KeyList.KeyValue {
-						if kv.Key == p["Key"] && re.MatchString(kv.Value) {
-							stops = append(stops, stop)
-						}
-					}
-				}
-			}
-			json.NewEncoder(rw).Encode(stops)
 		default:
 			message := map[string]string{
-				"/keylist":              "method: POST, payload: {\"Key\":\"key\",\"Value\":\"value\"}",
-				"/name":                 "method: POST, payload: {\"Value\":\"Oslo S\"}",
-				"/NSR:StopPlace:[0-9]+": "method: GET",
+				"/": "method: POST, payload: {}",
 			}
 			json.NewEncoder(rw).Encode(message)
 		}
