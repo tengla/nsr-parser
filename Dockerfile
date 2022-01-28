@@ -2,7 +2,6 @@ FROM golang:alpine AS build
 
 COPY cmd src/cmd
 COPY stopplace src/stopplace
-COPY trainroute src/trainroute
 COPY go.mod src
 COPY go.sum src
 COPY Makefile src
