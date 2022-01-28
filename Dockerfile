@@ -15,4 +15,5 @@ COPY nsr.current.xml nsr.current.xml
 COPY --from=build /go/src/dist/import bin/import
 COPY --from=build /go/src/dist/server bin/server
 RUN import -jsonout > nsr.current.json
+ENV PORT=8080
 CMD ["server"]

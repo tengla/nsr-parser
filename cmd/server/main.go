@@ -12,6 +12,6 @@ func main() {
 	}
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", MuxHandler(places))
-	log.Println("Starting server at :3000")
-	log.Fatal(http.ListenAndServe(":3000", mux))
+	log.Println("Starting server at :8080")
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
