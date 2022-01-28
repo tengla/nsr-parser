@@ -1,5 +1,0 @@
-
-*.json
-*.xml
-!nsr.current.xml
-dist
