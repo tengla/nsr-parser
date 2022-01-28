@@ -18,3 +18,4 @@ dist
 nsr.current.json
 nsr.current.xml
 node_modules
+.params.json
