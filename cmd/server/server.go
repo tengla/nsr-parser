@@ -39,6 +39,7 @@ func isPath(r *http.Request, method string, path string) bool {
 func MuxHandler(places []stopplace.StopPlace) func(rw http.ResponseWriter, r *http.Request) {
 
 	return func(rw http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
 		fmt.Printf("%s %s\n", r.Method, r.URL.Path)
 		rw.Header().Add("Content-Type", "application/json; charset=utf-8")
 		var search_params stopplace.SearchParams
@@ -55,7 +56,7 @@ func MuxHandler(places []stopplace.StopPlace) func(rw http.ResponseWriter, r *ht
 			}
 		default:
 			message := map[string]string{
-				"/": "method: POST, payload: {}",
+				"message": "Hello World",
 			}
 			json.NewEncoder(rw).Encode(message)
 		}
