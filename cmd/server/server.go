@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -41,20 +42,23 @@ func MuxHandler(places []stopplace.StopPlace) func(rw http.ResponseWriter, r *ht
 	return func(rw http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		fmt.Printf("%s %s\n", r.Method, r.URL.Path)
-		rw.Header().Add("Content-Type", "application/json; charset=utf-8")
 		var search_params stopplace.SearchParams
 		json.NewDecoder(r.Body).Decode(&search_params)
 		switch true {
 		case isPath(r, "POST", "/"):
+			rw.Header().Add("Content-Type", "application/x-ndjson; charset=utf-8")
 			params := search_params.ExtractParams()
 			fmt.Printf("%+v\n", params)
-			encoder := json.NewEncoder(rw)
+			enc := json.NewEncoder(rw)
 			for _, place := range places {
 				if stopplace.Match(params, place) {
-					encoder.Encode(place)
+					if err := enc.Encode(place); err != nil {
+						log.Fatal(err)
+					}
 				}
 			}
 		default:
+			rw.Header().Add("Content-Type", "application/json; charset=utf-8")
 			message := map[string]string{
 				"message": "Hello World",
 			}
