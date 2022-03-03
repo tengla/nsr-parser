@@ -9,9 +9,12 @@ COPY Makefile src
 RUN apk add make && \
   cd src && \
   make all
+COPY data/nsr.current.xml.gz .
+RUN pwd
+RUN gunzip nsr.current.xml.gz && stat nsr.current.xml
 
 FROM golang:alpine
-COPY nsr.current.xml nsr.current.xml
+COPY --from=build /go/nsr.current.xml .
 COPY --from=build /go/src/dist/import bin/import
 COPY --from=build /go/src/dist/server bin/server
 RUN import -jsonout > nsr.current.json
