@@ -1,4 +1,4 @@
-const https = require('http');
+const https = require('https');
 
 const prettyPrintPlace = place => {
   console.log(
@@ -18,13 +18,12 @@ const prettyPrintPlace = place => {
 const httpsAsync = (query) => {
   return new Promise((resolve, reject) => {
     const req = https.request({
-      // hostname: "nsr-o5iqmbtjaa-ew.a.run.app",
-      hostname: "127.0.0.1",
-      port: "8080",
+      hostname: "nsr-o5iqmbtjaa-ew.a.run.app",
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': query.length
+        'Content-Length': query.length,
+        'User-Agent': 'NodeJS/17.6.0'
       }
     }, res => {
       if (res.statusCode > 299) {
@@ -45,19 +44,18 @@ const httpsAsync = (query) => {
       })
     })
     req.on('error', err => {
-      // never mind conn reset
-      //if (err.code != 'ECONNRESET') {
+      if (err.code !== 'ECONNRESET') {
         console.error(err);
-      //}
+      }
     });
     req.write(query);
     req.end()
   });
 }
 const data = Buffer.from(JSON.stringify({
-  "latitude": 59.90724768268159,
-  "longitude": 10.753830146286921,
-  "distance": 15,
+  //"latitude": 59.90724768268159,
+  //"longitude": 10.753830146286921,
+  //"distance": 5,
   "name": "oslo",
   //"transportmode":"rail",
   //"key": "jbvCode",
